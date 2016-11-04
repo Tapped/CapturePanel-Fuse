@@ -1,0 +1,26 @@
+<Extensions Backend="CPlusPlus">
+    <Type Name="JpegSaver">
+        <Require Source.Include="@{Uno.Graphics.Texture2D:Include}" />
+        <Require Source.Include="@{Uno.Exception:Include}" />
+        <Require Source.Include="uBase/Buffer.h" />
+        <Require Source.Include="uBase/BufferStream.h" />
+        <Require Source.Include="uImage/Jpeg.h" />
+        <Require Source.Include="uImage/Texture.h" />
+        <Require Source.Include="Uno/Support.h" />
+
+        <Method Signature="ByteArrayRgbaToJpeg(Uno.Buffer,int,int,string)">
+            <Body>
+                try
+                {
+                    uBase::Auto<uBase::BufferPtr> bp = new uBase::BufferPtr(U_BUFFER_PTR($0), U_BUFFER_SIZE($0), false);
+                    uBase::Auto<uImage::Bitmap> bmp = new uImage::Bitmap($1, $2, uImage::Format::FormatRGB_8_8_8_UInt_Normalize, bp, $1 * 3, 0);
+                    uImage::Jpeg::Save(uStringToXliString($3), bmp, 60);
+                }
+                catch (const uBase::Exception &e)
+                {
+                    throw uThrowable(@{Uno.Exception(string):New(uStringFromXliString(e.GetMessage()))}, e.GetFunction(), e.GetLine());
+                }
+            </Body>
+        </Method>
+    </Type>
+</Extensions>

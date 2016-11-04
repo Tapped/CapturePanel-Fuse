@@ -1,0 +1,5 @@
+C:\Users\Emil\Development\Projects\CapturePanel\TextureSaverCil\obj\Debug\TextureSaverCil.csprojResolveAssemblyReference.cache
+C:\Users\Emil\Development\Projects\CapturePanel\TextureSaverCil\obj\Debug\TextureSaverCil.dll
+C:\Users\Emil\Development\Projects\CapturePanel\TextureSaverCil\obj\Debug\TextureSaverCil.pdb
+C:\Users\Emil\Development\Projects\CapturePanel\TextureSaverCil.dll
+C:\Users\Emil\Development\Projects\CapturePanel\TextureSaverCil.pdb

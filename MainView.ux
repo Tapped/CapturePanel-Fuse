@@ -1,0 +1,31 @@
+<App>
+	<JavaScript>
+		var Observable = require('FuseJS/Observable');
+		var capturedImg = Observable();
+	
+		function capture() {
+			capturePanel.capture(function(file) {
+				debug_log(file);
+				capturedImg.value = file;
+			});
+		};
+		
+		module.exports = {
+			capture: capture,
+			imgSrc: capturedImg
+		};
+	</JavaScript>
+	<Panel>
+		<CapturePanel ux:Name="capturePanel">
+			<StackPanel Margin="40">
+				<Rectangle Width="200" Height="200" CornerRadius="20" Color="#416181">
+					<Tapped>
+						<Rotate Degrees="720" Duration="3" />
+					</Tapped>
+				</Rectangle>
+				<Button Margin="30" Text="Capture" Clicked="{capture}" />
+			</StackPanel>
+		</CapturePanel>
+		<Image Alignment="Bottom" Width="300" Height="300" File="{imgSrc}" />
+	</Panel>
+</App>
