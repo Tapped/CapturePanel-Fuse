@@ -1,3 +1,5 @@
 build
 .uno
 .pdb
+obj
+.suo
