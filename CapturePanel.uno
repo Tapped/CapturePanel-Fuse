@@ -92,6 +92,11 @@ extern(Mobile) static class JpegSaver
 		return path;
 	}
 
+	[TargetSpecificImplementation]
+	public static void ByteArrayRgbaToJpeg(Uno.Buffer b, int width, int height, string path)
+	{
+	}
+
 	[Foreign(Language.Java)]
 	extern(Android) static string GetTempPath()
 	@{
