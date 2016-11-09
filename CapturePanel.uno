@@ -8,6 +8,30 @@ using Uno.Compiler.ExportTargetInterop;
 using Uno.Threading;
 using Uno.IO;
 
+class CallJSClosure
+{
+	readonly Context _context;
+	readonly Function _func;
+	
+	public CallJSClosure(Context context, Function func)
+	{
+		_context = context;
+		_func = func;
+	}
+
+	object _arg;
+	public void Run(object arg)
+	{	
+		_arg = arg;
+		_context.Dispatcher.Invoke(RunInternal);
+	}
+	
+	void RunInternal()
+	{
+		_func.Call(_arg);
+	}
+}
+
 public class CapturePanel : Panel
 {
 	static CapturePanel()
@@ -15,23 +39,24 @@ public class CapturePanel : Panel
 		ScriptClass.Register(typeof(CapturePanel), new ScriptMethod<CapturePanel>("capture", CaptureAsync, ExecutionThread.MainThread));
 	}
 	
-	static void CaptureAsync(Context c, CapturePanel capturePanel, object[] args)
+	static void CaptureAsync(Context ctx, CapturePanel capturePanel, object[] args)
 	{
 		var callback = args[0] as Function;
-		capturePanel.TriggerCapture(callback);
+		capturePanel.TriggerCapture(ctx, callback);
 	}
 	
-	Function _captureCallback;
-	public void TriggerCapture(Function captureCallback)
+	CallJSClosure _captureCallback;
+	
+	public void TriggerCapture(Context ctx, Function captureCallback)
 	{
-		_captureCallback = captureCallback;
+		_captureCallback = new CallJSClosure(ctx, captureCallback);
 	}
 
 	public override void Draw(DrawContext dc)
 	{
 		if(_captureCallback != null)
 		{
-			_captureCallback.Call(new object[] { Capture(dc) });
+			_captureCallback.Run(Capture(dc));
 			_captureCallback = null;
 		}
 		
