@@ -50,17 +50,17 @@ public class CapturePanel : Panel
 	public void TriggerCapture(Context ctx, Function captureCallback)
 	{
 		_captureCallback = new CallJSClosure(ctx, captureCallback);
+		InvalidateVisual();
 	}
 
-	public override void Draw(DrawContext dc)
+	protected override void DrawVisual(DrawContext dc)
 	{
 		if(_captureCallback != null)
 		{
-			_captureCallback.Run(Capture(dc));
+			var callback = _captureCallback;
 			_captureCallback = null;
+			callback.Run(Capture(dc));
 		}
-		
-		base.Draw(dc);
 	}
 
 	string Capture(DrawContext dc)
@@ -86,7 +86,6 @@ public class CapturePanel : Panel
 				rgbBytes[curIdx++] = imageBytes[idx + 1];
 				rgbBytes[curIdx++] = imageBytes[idx + 2];
 			}
-
 		return JpegSaver.CreateAndSaveJpegTmp(width, height, rgbBytes);
 	}
 }
