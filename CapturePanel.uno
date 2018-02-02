@@ -26,7 +26,7 @@ class CallJSClosure
 		_context.Invoke(RunInternal);
 	}
 	
-	void RunInternal(Fuse.Scripting.Context ctx)
+	void RunInternal(Context ctx)
 	{
 		_func.Call(ctx, _arg);
 	}
