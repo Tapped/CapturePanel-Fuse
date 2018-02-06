@@ -36,13 +36,14 @@ public class CapturePanel : Panel
 {
 	static CapturePanel()
 	{
-		ScriptClass.Register(typeof(CapturePanel), new ScriptMethod<CapturePanel>("capture", CaptureAsync, ExecutionThread.MainThread));
+		ScriptClass.Register(typeof(CapturePanel), new ScriptMethod<CapturePanel>("capture", CaptureAsync));
 	}
 	
-	static void CaptureAsync(Context ctx, CapturePanel capturePanel, object[] args)
+	static object CaptureAsync(Context ctx, CapturePanel capturePanel, object[] args)
 	{
 		var callback = args[0] as Function;
 		capturePanel.TriggerCapture(ctx, callback);
+		return null;
 	}
 	
 	CallJSClosure _captureCallback;
@@ -50,7 +51,7 @@ public class CapturePanel : Panel
 	public void TriggerCapture(Context ctx, Function captureCallback)
 	{
 		_captureCallback = new CallJSClosure(ctx, captureCallback);
-		InvalidateVisual();
+		UpdateManager.PostAction(InvalidateVisual);
 	}
 
 	protected override void DrawVisual(DrawContext dc)
