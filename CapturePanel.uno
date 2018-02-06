@@ -23,12 +23,12 @@ class CallJSClosure
 	public void Run(object arg)
 	{	
 		_arg = arg;
-		_context.Dispatcher.Invoke(RunInternal);
+		_context.Invoke(RunInternal);
 	}
 	
-	void RunInternal()
+	void RunInternal(Context ctx)
 	{
-		_func.Call(_arg);
+		_func.Call(ctx, _arg);
 	}
 }
 
