@@ -113,12 +113,12 @@ extern(Mobile) static class JpegSaver
 	public static string CreateAndSaveJpegTmp(int width, int height, byte []bytes)
 	{
 		var path = GetTempPath();
-		JpegSaver.ByteArrayRgbaToJpeg(new Buffer(bytes), width, height, path);
+		JpegSaver.ByteArrayRgbaToJpeg(bytes, width, height, path);
 		return path;
 	}
 
 	[TargetSpecificImplementation]
-	public static void ByteArrayRgbaToJpeg(Uno.Buffer b, int width, int height, string path)
+	public static void ByteArrayRgbaToJpeg(byte[] b, int width, int height, string path)
 	{
 	}
 
